@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block contenu %}
+    <div id="contenu-wishdetails">
+        <p><strong>Number of wish : </strong>{{ wish.id }}</p>
+        <p><strong>Title : </strong>{{ wish.title }}</p>
+        <p><strong>Description : </strong>{{ wish.description }}</p>
+        <p><strong>Category : </strong>{{ wish.category.name }}</p>
+        <p><strong>Date : </strong>{{ wish.dateCreated|date("d/m/Y") }}</p>
+        <p><strong>Published : </strong>{{ wish.isPublished ? 'Yes' : 'No' }}</p>
+    </div>
+    <p id="author-wishdetails"><strong>Published by : </strong>{{ wish.author }}</p>
+    <div id="div-bouton-modify">
+        <a href="{{ path("updatewish",{'id' : wish.id }) }}"><button id="bouton-modify">Modify</button></a>
+    </div>
+{% endblock %}

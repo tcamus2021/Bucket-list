@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+{% block contenu %}
+    <div id="wish-selector-category">
+        <a href="{{ path("wish") }}"><button class="bouton-category" {% if app.request.get('_route') == "wish" %} disabled {% endif %} >Tout</button></a>
+        {% for category in categories %}
+            <a href="{{ path("wishFilter",{'id' : category.id }) }}"><button class="bouton-category"
+                        {% if app.request.pathinfo == path("wishFilter",{'id' : category.id }) %}
+                disabled {% endif %}>{{ category.name }}</button></a>
+        {% endfor %}
+    </div>
+    <div id="contenu-wish">
+        <h2 id="titre-wish">Différents wishes</h2>
+        {% set i = 0 %}
+        {% for wish in wishes %}
+            {% if i == 0 %}
+                <div class="wish-list-element element-a">
+                    <div>{{ wish.title }}</div>
+                    <div>{{ wish.author }}</div>
+                    <div>{{ wish.dateCreated|date("d/m/Y") }}</div>
+                    <div class="icon-img" onclick="acceder({{ wish.id }})">
+                        <img id="acces-wish-img" alt="acceder" src="{{ asset('img/arrow-right-square-fill.svg') }}">
+                        <p>Go</p>
+                    </div>
+                    <div class="icon-img supress" onclick="supprimer({{ wish.id }})">
+                        <img id="acces-wish-img" alt="supprimer" src="{{ asset('img/dash-circle-fill.svg') }}">
+                        <p>Delete</p>
+                    </div>
+                </div>
+                {% set i = 1 %}
+            {% else %}
+                <div class="wish-list-element element-b" id="{{ wish.id }}">
+                    <div>{{ wish.title }}</div>
+                    <div>{{ wish.author }}</div>
+                    <div>{{ wish.dateCreated|date("d/m/Y") }}</div>
+                    <div class="icon-img" onclick="acceder({{ wish.id }})">
+                        <img id="acces-wish-img" alt="acceder" src="{{ asset('img/arrow-right-square-fill.svg') }}">
+                        <p>Go</p>
+                    </div>
+                    <div class="icon-img" onclick="supprimer({{ wish.id }})">
+                        <img id="acces-wish-img" alt="supprimer" src="{{ asset('img/dash-circle-fill.svg') }}">
+                        <p>Delete</p>
+                    </div>
+                </div>
+                {% set i = 0 %}
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <script>
+        function acceder(id) {
+            document.location.href = '{{ path("details",{'id' : 'idWish' }) }}'.replace('idWish', id);
+        }
+
+        function supprimer(id) {
+            document.location.href = '{{ path("deletewish",{'id' : 'idWish' }) }}'.replace('idWish', id);
+        }
+    </script>
+{% endblock %}
