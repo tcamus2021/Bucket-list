@@ -5,29 +5,23 @@
     <title>{{ titre }}</title>
     <style>
         :root {
-        {% set color = random(4) %}
-        {% if color == 0 %}
-            --color-entete: #F2BC0A;
+        {% set color = random(4) %}{% if color == 0 %} --color-entete: #F2BC0A;
             --color-border: #DBC114;
             --color-menu: #F2EB0A;
             --color-footer: #B3E809;
-        {% elseif color == 1 %}
-            --color-entete: #4882D9;
+        {% elseif color == 1 %} --color-entete: #4882D9;
             --color-border: #475DFF;
             --color-menu: #48CFD9;
             --color-footer: #5ABEF0;
-        {% elseif color == 2 %}
-            --color-entete: #DB3624;
+        {% elseif color == 2 %} --color-entete: #DB3624;
             --color-border: #F21B3D;
             --color-menu: #F2501B;
             --color-footer: #E86A1A;
-        {% elseif color == 3 %}
-            --color-entete: #69F205;
+        {% elseif color == 3 %} --color-entete: #69F205;
             --color-border: #1CDB07;
             --color-menu: #0CF536;
             --color-footer: #1EEB78;
-        {% elseif color == 4 %}
-            --color-entete: #A574F2;
+        {% elseif color == 4 %} --color-entete: #A574F2;
             --color-border: #B573DB;
             --color-menu: #E887F5;
             --color-footer: #EB94D5;
@@ -41,12 +35,29 @@
 <body>
 <div id="content">
     <header id="entete">
-        <div id="logo">
+        <div id="logo" class="entete-div">
             <img src="{{ asset('img/logo.png') }}" alt="logo">
         </div>
-        <div id="titre">
+        <div id="titre" class="entete-div">
             <h1>Bucket-List</h1>
         </div>
+        {% if app.user %}
+            <div id="login-button" class="entete-div">
+                Hello {{ app.user.username }}
+                <a href="{{ path('app_logout') }}">
+                    <button class="log-btn">Logout</button>
+                </a>
+            </div>
+        {% else %}
+            <div id="login-button" class="entete-div">
+                <a href="{{ path('app_login') }}">
+                    <button class="log-btn">Login</button>
+                </a>
+                <a href="{{ path('app_register') }}">
+                    <button class="log-btn">Register</button>
+                </a>
+            </div>
+        {% endif %}
     </header>
     <main>
         <div id="menu">
@@ -59,10 +70,14 @@
                 <button class="bouton-menu"{% if app.request.get('_route') == "wish" %} disabled {% endif %}>Wish list
                 </button>
             </a>
+
+            {% if app.user %}
             <a href="{{ path('addwish') }}">
                 <button class="bouton-menu"{% if app.request.get('_route') == "addwish" %} disabled {% endif %}>Add Wish
                 </button>
             </a>
+            {% endif %}
+
             <a href="{{ path('aboutus') }}">
                 <button class="bouton-menu"{% if app.request.get('_route') == "aboutus" %} disabled {% endif %}>About us
                 </button>

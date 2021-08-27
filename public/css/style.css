@@ -16,18 +16,18 @@ body {
 #entete {
     background-color: var(--color-entete);
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     border-bottom: solid;
     border-bottom-color: var(--color-border);
     border-bottom-width: 5px;
 }
 
-#logo {
-    width: 45%;
+.entete-div{
+    width: 100%;
 }
 
 #titre {
-    width: 55%;
+    text-align: center;
 }
 
 #menu {
@@ -74,6 +74,28 @@ body {
 
 #contenu-home-logo {
     width: 100px;
+}
+
+#login-button{
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+}
+
+.log-btn{
+    background-color: var(--color-footer);
+    border: var(--color-footer);
+    width: 100%;
+    height: 50px;
+    font-size: 20px;
+}
+
+.log-btn:hover{
+    background-color: var(--color-border);
+    border: var(--color-border);
+    width: 100%;
+    height: 50px;
+    font-size: 20px;
 }
 
 /* wish */

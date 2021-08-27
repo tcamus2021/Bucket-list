@@ -17,7 +17,6 @@ class AddWishFormType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('author')
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name'

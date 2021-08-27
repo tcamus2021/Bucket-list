@@ -21,10 +21,12 @@
                         <img id="acces-wish-img" alt="acceder" src="{{ asset('img/arrow-right-square-fill.svg') }}">
                         <p>Go</p>
                     </div>
+                    {% if is_granted('ROLE_ADMIN') %}
                     <div class="icon-img supress" onclick="supprimer({{ wish.id }})">
                         <img id="acces-wish-img" alt="supprimer" src="{{ asset('img/dash-circle-fill.svg') }}">
                         <p>Delete</p>
                     </div>
+                    {% endif %}
                 </div>
                 {% set i = 1 %}
             {% else %}
@@ -36,10 +38,12 @@
                         <img id="acces-wish-img" alt="acceder" src="{{ asset('img/arrow-right-square-fill.svg') }}">
                         <p>Go</p>
                     </div>
+                    {% if is_granted('ROLE_ADMIN') %}
                     <div class="icon-img" onclick="supprimer({{ wish.id }})">
                         <img id="acces-wish-img" alt="supprimer" src="{{ asset('img/dash-circle-fill.svg') }}">
                         <p>Delete</p>
                     </div>
+                    {% endif %}
                 </div>
                 {% set i = 0 %}
             {% endif %}
@@ -50,9 +54,10 @@
         function acceder(id) {
             document.location.href = '{{ path("details",{'id' : 'idWish' }) }}'.replace('idWish', id);
         }
-
+        {% if is_granted('ROLE_ADMIN') %}
         function supprimer(id) {
             document.location.href = '{{ path("deletewish",{'id' : 'idWish' }) }}'.replace('idWish', id);
         }
+        {% endif %}
     </script>
 {% endblock %}

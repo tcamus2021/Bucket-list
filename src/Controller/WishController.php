@@ -72,6 +72,7 @@ class WishController extends AbstractController
         $addwishform = $this->createForm(AddWishFormType::class, $wish);
         $addwishform->handleRequest($request);
         if($addwishform->isSubmitted() && $addwishform->isValid()) {
+            $wish->setAuthor($this->getUser()->getUserIdentifier());
             $wish->setDateCreated(new \DateTime('now'));
             $wish->setIsPublished(true);
             $this->em->persist($wish);
@@ -99,17 +100,22 @@ class WishController extends AbstractController
      */
     public function update(Wish $wish, Request $request): Response
     {
-        $addwishform = $this->createForm(UpdateWishFormType::class, $wish);
-        $addwishform->handleRequest($request);
-        if($addwishform->isSubmitted() && $addwishform->isValid()) {
-            $this->em->persist($wish);
-            $this->em->flush();
-            return $this->redirectToRoute("wish");
+        if($this->getUser()->getUserIdentifier() == $wish->getAuthor()) {
+            $addwishform = $this->createForm(UpdateWishFormType::class, $wish);
+            $addwishform->handleRequest($request);
+            if ($addwishform->isSubmitted() && $addwishform->isValid()) {
+                $this->em->persist($wish);
+                $this->em->flush();
+                return $this->redirectToRoute("wish");
+            }
+            return $this->render('wish/update.html.twig', [
+                'titre' => 'Add wish',
+                'form' => $addwishform->createView(),
+            ]);
         }
-        return $this->render('wish/update.html.twig', [
-            'titre' => 'Add wish',
-            'form' => $addwishform->createView(),
-        ]);
+        else{
+            return $this->redirectToRoute('wish');
+        }
     }
 
 }
