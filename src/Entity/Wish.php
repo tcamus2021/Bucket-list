@@ -31,8 +31,6 @@ class Wish
     private $description;
 
     /**
-     * @Assert\NotBlank(message="Author blank")
-     * @Assert\Length(min = 3, max="254", minMessage="2 char min", minMessage="3 char min", maxMessage="254 char max")
      * @ORM\Column(type="string", length=50)
      */
     private $author;
