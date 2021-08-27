@@ -72,10 +72,11 @@
             </a>
 
             {% if app.user %}
-            <a href="{{ path('addwish') }}">
-                <button class="bouton-menu"{% if app.request.get('_route') == "addwish" %} disabled {% endif %}>Add Wish
-                </button>
-            </a>
+                <a href="{{ path('addwish') }}">
+                    <button class="bouton-menu"{% if app.request.get('_route') == "addwish" %} disabled {% endif %}>Add
+                        Wish
+                    </button>
+                </a>
             {% endif %}
 
             <a href="{{ path('aboutus') }}">
@@ -93,3 +94,4 @@
 </footer>
 </body>
 </html>
+

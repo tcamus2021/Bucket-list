@@ -6,6 +6,7 @@ use App\Entity\Category;
 use App\Entity\Wish;
 use App\Form\AddWishFormType;
 use App\Form\UpdateWishFormType;
+use App\Util\Censurator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,12 +67,16 @@ class WishController extends AbstractController
     /**
      * @Route("/addwish", name="addwish")
      */
-    public function ajout(Request $request): Response
+    public function ajout(Request $request, Censurator $censurator): Response
     {
         $wish = new Wish();
         $addwishform = $this->createForm(AddWishFormType::class, $wish);
         $addwishform->handleRequest($request);
         if($addwishform->isSubmitted() && $addwishform->isValid()) {
+
+            $wish->setTitle($censurator->purify($wish->getTitle()));
+            $wish->setDescription($censurator->purify($wish->getDescription()));
+
             $wish->setAuthor($this->getUser()->getUserIdentifier());
             $wish->setDateCreated(new \DateTime('now'));
             $wish->setIsPublished(true);
@@ -98,18 +103,22 @@ class WishController extends AbstractController
     /**
      * @Route("/wishupdate/{id}", name="updatewish")
      */
-    public function update(Wish $wish, Request $request): Response
+    public function update(Wish $wish, Request $request, Censurator $censurator): Response
     {
         if($this->getUser()->getUserIdentifier() == $wish->getAuthor()) {
             $addwishform = $this->createForm(UpdateWishFormType::class, $wish);
             $addwishform->handleRequest($request);
             if ($addwishform->isSubmitted() && $addwishform->isValid()) {
+
+                $wish->setTitle($censurator->purify($wish->getTitle()));
+                $wish->setDescription($censurator->purify($wish->getDescription()));
+
                 $this->em->persist($wish);
                 $this->em->flush();
                 return $this->redirectToRoute("wish");
             }
             return $this->render('wish/update.html.twig', [
-                'titre' => 'Add wish',
+                'titre' => 'Update wish',
                 'form' => $addwishform->createView(),
             ]);
         }
