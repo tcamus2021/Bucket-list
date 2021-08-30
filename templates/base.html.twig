@@ -2,7 +2,12 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{{ titre }}</title>
+    <title>
+        {% if titre is defined %}
+            {{ titre }}
+        {% endif %}
+
+    </title>
     <style>
         :root {
         {% set color = random(4) %}{% if color == 0 %} --color-entete: #F2BC0A;
