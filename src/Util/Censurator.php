@@ -5,7 +5,7 @@ namespace App\Util;
 class Censurator
 {
 
-    private $motInterdit = ['pute', 'enculé', 'cocaïne'];
+    private $motInterdit = ['HTML', 'Scala', 'MAC'];
 
     public function purify(?string $text)
     {
